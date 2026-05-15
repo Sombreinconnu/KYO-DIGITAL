@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="KYÔ DIGITAL — Agence digitale d'élite. Architecture web, IA, Design & Stratégie. L'avenir se décide aujourd'hui." />
+  <title>KYÔ DIGITAL | L'avenir se décide aujourd'hui</title>
+
+  <!-- ── Fonts ──────────────────────────────────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Inter:wght@300;400;600;700&family=Michroma&display=swap" rel="stylesheet" />
+
+  <!-- ── Icons ─────────────────────────────────────────────────── -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- ── Styles ────────────────────────────────────────────────── -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════ PRELOADER ═══════════════════════ -->
+  <!-- Conservé intégralement — chargement animé avec barre de progression -->
+  <div id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <div class="preloader-logo">KY<span>Ô</span></div>
+      <div class="preloader-bar"><div class="preloader-fill" id="preloaderFill"></div></div>
+      <div class="preloader-pct" id="preloaderPct">0%</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ CURSOR ════════════════════════════ -->
+  <!-- Curseur dynamique — désactivé sur mobile -->
+  <div id="cursor" aria-hidden="true"></div>
+  <div id="cursor-dot" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════ SCROLL INDICATOR ════════════════ -->
+  <div id="scroll-progress" aria-hidden="true">
+    <div id="scroll-fill"></div>
+  </div>
+
+  <!-- ═══════════════════════════════ NAVBAR ═══════════════════════════ -->
+  <nav id="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-brand" onclick="goToSlide(0)" role="button" tabindex="0" aria-label="Accueil KYÔ DIGITAL">
+      <div class="nav-logo">KY<span>Ô</span></div>
+      <div class="nav-sub">DIGITAL</div>
+    </div>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#" onclick="goToSlide(1); return false;" class="nav-link" data-slide="1">Propos</a></li>
+      <li><a href="#" onclick="goToSlide(2); return false;" class="nav-link" data-slide="2">Solutions</a></li>
+      <li><a href="#" onclick="goToSlide(3); return false;" class="nav-link" data-slide="3">Contact</a></li>
+    </ul>
+
+    <!-- Bouton CTA principal en nav -->
+    <button class="btn-briefing" onclick="goToSlide(3)" aria-label="Initialiser un projet">
+      <span>Initialiser</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+
+    <!-- Hamburger mobile -->
+    <button class="hamburger" id="hamburger" aria-label="Menu mobile" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── Mobile Menu ──────────────────────────────────────────────────── -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu mobile" hidden>
+    <div class="mobile-menu-inner">
+      <ul>
+        <li><a href="#" onclick="mobileNav(1); return false;">Propos</a></li>
+        <li><a href="#" onclick="mobileNav(2); return false;">Solutions</a></li>
+        <li><a href="#" onclick="mobileNav(3); return false;">Contact</a></li>
+      </ul>
+      <button class="btn-briefing" onclick="mobileNav(3)">Initialiser un Projet</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ SIDE DOTS ════════════════════════ -->
+  <!-- Navigation latérale par points — mise à jour automatique -->
+  <aside class="side-nav" aria-label="Navigation par sections">
+    <button class="nav-dot active" onclick="goToSlide(0)" aria-label="Section 1 : Hero" data-tooltip="Hero"></button>
+    <button class="nav-dot"        onclick="goToSlide(1)" aria-label="Section 2 : Propos" data-tooltip="Propos"></button>
+    <button class="nav-dot"        onclick="goToSlide(2)" aria-label="Section 3 : Solutions" data-tooltip="Solutions"></button>
+    <button class="nav-dot"        onclick="goToSlide(3)" aria-label="Section 4 : Contact" data-tooltip="Contact"></button>
+  </aside>
+
+  <!-- ═══════════════════════════════ SLIDES WRAPPER ═══════════════════ -->
+  <!-- Conteneur principal — système de slides plein écran préservé -->
+  <main id="slides-wrapper" aria-live="polite">
+
+    <!-- ─────────────────────────────────────────────────────────────────
+         SLIDE 01 — HERO
+         Impact visuel maximal avec canvas particules, glows et kanji filigrane
+    ──────────────────────────────────────────────────────────────────── -->
+    <section class="slide slide-hero" id="slide-0" aria-label="Hero – KYÔ DIGITAL">
+      <!-- Canvas particules animées -->
+      <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+      <!-- Halos lumineux décoratifs -->
+      <div class="hero-glow glow-blue" aria-hidden="true"></div>
+      <div class="hero-glow glow-purple" aria-hidden="true"></div>
+
+      <!-- Kanji 今日 en filigrane (opacité 3%) — directive design -->
+      <div class="kanji-watermark" aria-hidden="true">今日</div>
+
+      <div class="hero-content reveal-group">
+        <!-- Badge d'accroche -->
+        <div class="hero-badge reveal">
+          <i class="fa-solid fa-bolt"></i> Agence Digitale d'Élite
+        </div>
+
+        <!-- Titre principal — Montserrat 900 -->
+        <h1 class="hero-title reveal">
+          KYÔ<br /><span class="accent">DIGITAL</span>
+        </h1>
+
+        <!-- Sous-titre slogan officiel -->
+        <p class="hero-sub reveal">
+          L'AVENIR SE DÉCIDE <strong>AUJOURD'HUI.</strong>
+        </p>
+
+        <!-- Actions hero — bouton Initialiser avec transition Bleu → Violet -->
+        <div class="hero-actions reveal">
+          <button class="btn-primary" onclick="goToSlide(3)">
+            Initialiser
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <button class="btn-ghost" onclick="goToSlide(1)">
+            Découvrir
+          </button>
+        </div>
+      </div>
+
+      <!-- Indicateur de scroll -->
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+        <span>Défiler</span>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────────
+         SLIDE 02 — PROPOS
+         Mise en page asymétrique — Mission : Maîtriser le digital actuel
+    ──────────────────────────────────────────────────────────────────── -->
+    <section class="slide slide-propos" id="slide-1" aria-label="Notre Propos">
+      <!-- Kanji filigrane pour cohérence visuelle inter-slides -->
+      <div class="kanji-watermark" aria-hidden="true">今日</div>
+
+      <div class="section-container propos-layout">
+
+        <!-- Colonne gauche — texte asymétrique -->
+        <div class="propos-left reveal-group">
+          <div class="section-tag reveal">Notre Propos</div>
+
+          <h2 class="section-title reveal">
+            MAÎTRISER<br /><span class="accent">L'INSTANT.</span><br />
+            <span class="italic">Définir l'avenir.</span>
+          </h2>
+
+          <div class="propos-divider reveal" aria-hidden="true"></div>
+
+          <p class="propos-text reveal">
+            KYÔ DIGITAL est né d'une conviction simple : le succès digital ne s'improvise pas. 
+            Il se <strong>décide</strong>. Nous sommes l'agence de ceux qui refusent la médiocrité 
+            et choisissent l'excellence opérationnelle comme standard.
+          </p>
+
+          <p class="propos-text reveal">
+            Notre mission : vous donner la maîtrise totale de votre présence digitale 
+            <strong>aujourd'hui</strong>, pour que vos décisions d'aujourd'hui 
+            façonnent le leader que vous serez demain.
+          </p>
+
+          <!-- Bouton CTA secondaire -->
+          <button class="btn-underline reveal" onclick="goToSlide(2)">
+            Découvrir nos solutions <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Colonne droite — éléments visuels asymétriques -->
+        <div class="propos-right reveal-group">
+
+          <!-- Valeurs-clés en grid décalée -->
+          <div class="propos-values">
+            <div class="value-item reveal" style="--delay: 0ms">
+              <div class="value-icon"><i class="fa-solid fa-crosshairs"></i></div>
+              <div class="value-body">
+                <h3>Précision</h3>
+                <p>Chaque pixel, chaque ligne de code, chaque stratégie — conçus avec intention.</p>
+              </div>
+            </div>
+            <div class="value-item reveal offset" style="--delay: 150ms">
+              <div class="value-icon purple"><i class="fa-solid fa-infinity"></i></div>
+              <div class="value-body">
+                <h3>Scalabilité</h3>
+                <p>Des solutions qui grandissent avec votre ambition, sans jamais freiner votre élan.</p>
+              </div>
+            </div>
+            <div class="value-item reveal" style="--delay: 300ms">
+              <div class="value-icon"><i class="fa-solid fa-shield-halved"></i></div>
+              <div class="value-body">
+                <h3>Fiabilité</h3>
+                <p>Un partenaire unique, une responsabilité totale, des résultats mesurables.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stat décorative flottante -->
+          <div class="propos-stat reveal">
+            <span class="stat-number">+50</span>
+            <span class="stat-label">Projets livrés<br/>avec excellence</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Slogan en bas de section — directive design -->
+      <div class="slide-slogan" aria-label="Slogan KYÔ DIGITAL">
+        L'AVENIR SE DÉCIDE AUJOURD'HUI.
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────────
+         SLIDE 03 — SOLUTIONS (PACKS)
+         3 cartes d'élite — LANCEMENT · CROISSANCE · ULTIMATE
+         Bouton "Sélectionner" pré-remplit le formulaire slide 04
+    ──────────────────────────────────────────────────────────────────── -->
+    <section class="slide slide-solutions" id="slide-2" aria-label="Nos Solutions – Packs">
+      <div class="kanji-watermark" aria-hidden="true">今日</div>
+
+      <div class="section-container solutions-layout">
+
+        <!-- En-tête section -->
+        <header class="section-header reveal-group">
+          <div class="section-tag reveal">Solutions</div>
+          <h2 class="section-title reveal">
+            CHOISISSEZ VOTRE <span class="accent">NIVEAU</span>
+          </h2>
+          <p class="section-desc reveal">
+            Trois packs d'élite, conçus pour répondre à chaque stade de votre ambition digitale.
+          </p>
+        </header>
+
+        <!-- Grille des 3 packs -->
+        <div class="packs-grid reveal-group">
+
+          <!-- PACK 1 : LANCEMENT -->
+          <article class="pack-card reveal" data-pack="PACK LANCEMENT" tabindex="0" aria-label="Pack Lancement – 150 000 FCFA">
+            <div class="pack-badge">01</div>
+            <div class="pack-header">
+              <div class="pack-icon"><i class="fa-solid fa-rocket"></i></div>
+              <div class="pack-tier">PACK</div>
+              <h3 class="pack-name">LANCEMENT</h3>
+            </div>
+            <div class="pack-price">
+              <span class="price-amount">150k</span>
+              <span class="price-currency">FCFA</span>
+            </div>
+            <ul class="pack-features" aria-label="Fonctionnalités incluses">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Site vitrine professionnel</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Identité visuelle de base</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Optimisation SEO fondamentale</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Intégration réseaux sociaux</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Livraison sous 7 jours</li>
+            </ul>
+            <button class="btn-select" onclick="selectPack('PACK LANCEMENT – 150k FCFA')" aria-label="Sélectionner le Pack Lancement">
+              Sélectionner <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <div class="pack-glow glow-blue" aria-hidden="true"></div>
+          </article>
+
+          <!-- PACK 2 : CROISSANCE — Recommandé -->
+          <article class="pack-card pack-featured reveal" data-pack="PACK CROISSANCE" tabindex="0" aria-label="Pack Croissance – 450 000 FCFA (Recommandé)">
+            <div class="pack-recommended" aria-label="Pack recommandé">RECOMMANDÉ</div>
+            <div class="pack-badge">02</div>
+            <div class="pack-header">
+              <div class="pack-icon purple"><i class="fa-solid fa-chart-line"></i></div>
+              <div class="pack-tier">PACK</div>
+              <h3 class="pack-name">CROISSANCE</h3>
+            </div>
+            <div class="pack-price">
+              <span class="price-amount">450k</span>
+              <span class="price-currency">FCFA</span>
+            </div>
+            <ul class="pack-features" aria-label="Fonctionnalités incluses">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Tout du Pack Lancement</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Application web sur-mesure</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Intégration IA & automatisation</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Dashboard analytique</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Support 30 jours inclus</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Stratégie digitale complète</li>
+            </ul>
+            <button class="btn-select btn-select-featured" onclick="selectPack('PACK CROISSANCE – 450k FCFA')" aria-label="Sélectionner le Pack Croissance">
+              Sélectionner <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <div class="pack-glow glow-purple" aria-hidden="true"></div>
+          </article>
+
+          <!-- PACK 3 : ULTIMATE -->
+          <article class="pack-card reveal" data-pack="PACK ULTIMATE" tabindex="0" aria-label="Pack Ultimate – Sur devis, à partir de 1M FCFA">
+            <div class="pack-badge">03</div>
+            <div class="pack-header">
+              <div class="pack-icon"><i class="fa-solid fa-crown"></i></div>
+              <div class="pack-tier">PACK</div>
+              <h3 class="pack-name">ULTIMATE</h3>
+            </div>
+            <div class="pack-price">
+              <span class="price-amount">1M+</span>
+              <span class="price-currency">FCFA</span>
+            </div>
+            <ul class="pack-features" aria-label="Fonctionnalités incluses">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Solution digitale 360°</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Architecture cloud scalable</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> IA générative sur-mesure</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Infographie & motion design</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Support dédié 90 jours</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Partenariat stratégique long terme</li>
+            </ul>
+            <button class="btn-select" onclick="selectPack('PACK ULTIMATE – 1M+ FCFA')" aria-label="Sélectionner le Pack Ultimate">
+              Sélectionner <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <div class="pack-glow glow-blue" aria-hidden="true"></div>
+          </article>
+
+        </div><!-- /packs-grid -->
+      </div><!-- /section-container -->
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────────
+         SLIDE 04 — CONTACT
+         Formulaire ultra-propre — soumission via WhatsApp Direct
+         Champs : Nom, WhatsApp, Localisation, Choix du Pack, Budget
+    ──────────────────────────────────────────────────────────────────── -->
+    <section class="slide slide-contact" id="slide-3" aria-label="Contact – Initialiser votre projet">
+      <div class="contact-bg-glow" aria-hidden="true"></div>
+      <div class="kanji-watermark" aria-hidden="true">今日</div>
+
+      <div class="section-container contact-layout">
+
+        <!-- Colonne gauche — accroche et infos -->
+        <div class="contact-left reveal-group">
+          <div class="section-tag reveal">Collaboration</div>
+
+          <h2 class="section-title italic reveal">
+            DÉCIDEZ <span class="accent">AUJOURD'HUI.</span>
+          </h2>
+
+          <p class="section-desc reveal">
+            Chaque grand projet commence par une conversation décisive. La vôtre commence ici.
+          </p>
+
+          <!-- Informations de contact -->
+          <ul class="contact-info reveal" aria-label="Coordonnées KYÔ DIGITAL">
+            <li>
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              <a href="https://wa.me/22791040181" target="_blank" rel="noopener noreferrer" aria-label="Contacter sur WhatsApp">+227 91 04 01 81</a>
+            </li>
+            <li>
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+              <a href="mailto:kyodigital@yahoo.com" aria-label="Envoyer un email">kyodigital@yahoo.com</a>
+            </li>
+            <li>
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+              Niamey · En ligne partout
+            </li>
+            <li>
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              Réponse sous 24h
+            </li>
+          </ul>
+
+          <!-- Réseaux sociaux -->
+          <div class="contact-socials reveal" aria-label="Réseaux sociaux KYÔ DIGITAL">
+            <a href="www.linkedin.com/in/ahmed-ali-64612240b" aria-label="LinkedIn KYÔ DIGITAL"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Behance KYÔ DIGITAL"><i class="fa-brands fa-behance"></i></a>
+            <a href="#" aria-label="Instagram KYÔ DIGITAL"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/22791040181" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp KYÔ DIGITAL"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <!-- Colonne droite — formulaire -->
+        <div class="contact-right reveal-group">
+          <form class="contact-form" id="contactForm" novalidate>
+
+            <!-- Ligne 1 : Nom + WhatsApp -->
+            <div class="form-row">
+              <div class="form-group reveal">
+                <label for="fullName">Nom Complet</label>
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  placeholder="Votre nom"
+                  autocomplete="name"
+                  required
+                  aria-required="true"
+                />
+                <span class="form-err" aria-live="polite"></span>
+              </div>
+              <div class="form-group reveal">
+                <label for="whatsapp">WhatsApp</label>
+                <input
+                  type="tel"
+                  id="whatsapp"
+                  name="whatsapp"
+                  placeholder="+227 XX XX XX XX"
+                  autocomplete="tel"
+                  required
+                  aria-required="true"
+                />
+                <span class="form-err" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <!-- Ligne 2 : Localisation + Pack -->
+            <div class="form-row">
+              <div class="form-group reveal">
+                <label for="localisation">Localisation</label>
+                <input
+                  type="text"
+                  id="localisation"
+                  name="localisation"
+                  placeholder="Niamey, Paris, Tokyo…"
+                  autocomplete="address-level2"
+                  required
+                  aria-required="true"
+                />
+                <span class="form-err" aria-live="polite"></span>
+              </div>
+              <div class="form-group reveal">
+                <label for="packChoisi">Choix du Pack</label>
+                <select id="packChoisi" name="packChoisi" aria-required="false">
+                  <option value="">— Sélectionner un pack —</option>
+                  <option value="PACK LANCEMENT – 150k FCFA">PACK LANCEMENT – 150k FCFA</option>
+                  <option value="PACK CROISSANCE – 450k FCFA">PACK CROISSANCE – 450k FCFA</option>
+                  <option value="PACK ULTIMATE – 1M+ FCFA">PACK ULTIMATE – 1M+ FCFA</option>
+                  <option value="Pack personnalisé">Pack personnalisé / Sur devis</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Budget -->
+            <div class="form-group reveal">
+              <label for="budget">Budget Estimé</label>
+              <select id="budget" name="budget" aria-required="false">
+                <option value="">— Fourchette budgétaire —</option>
+                <option value="Moins de 150k FCFA">Moins de 150k FCFA</option>
+                <option value="150k – 450k FCFA">150k – 450k FCFA</option>
+                <option value="450k – 1M FCFA">450k – 1M FCFA</option>
+                <option value="1M+ FCFA">1M+ FCFA</option>
+                <option value="À discuter">À discuter</option>
+              </select>
+            </div>
+
+            <!-- Bouton de soumission — ouvre WhatsApp -->
+            <button type="submit" class="btn-submit reveal" id="submitBtn" aria-label="Envoyer via WhatsApp">
+              <span class="btn-text">
+                <i class="fa-brands fa-whatsapp btn-wa-icon" aria-hidden="true"></i>
+                Envoyer via WhatsApp
+              </span>
+              <i class="fa-solid fa-arrow-right btn-icon" aria-hidden="true"></i>
+              <div class="btn-loader" aria-hidden="true"></div>
+            </button>
+
+            <!-- Message de succès -->
+            <div class="form-success" id="formSuccess" role="alert" hidden>
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              <span>Redirection WhatsApp en cours… On vous répond sous 24h.</span>
+            </div>
+
+          </form>
+        </div><!-- /contact-right -->
+
+      </div><!-- /contact-layout -->
+    </section>
+
+  </main><!-- /#slides-wrapper -->
+
+  <!-- ═══════════════════════════════ FOOTER ════════════════════════════ -->
+  <!-- Slogan export discret — directive design -->
+  <footer class="site-footer" aria-label="Pied de page KYÔ DIGITAL">
+    <span>© 2026 KYÔ DIGITAL</span>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <span class="footer-slogan">OWN TODAY. DEFINE TOMORROW.</span>
+  </footer>
+
+  <!-- Compteur de slide actif -->
+  <div class="slide-counter" aria-live="polite" aria-atomic="true">
+    <span id="currentSlideNum">01</span>
+    <span class="counter-sep">/</span>
+    <span>04</span>
+  </div>
+
+  <!-- ── Script principal ───────────────────────────────────────────── -->
+  <script src="script.js"></script>
+</body>
+</html>
